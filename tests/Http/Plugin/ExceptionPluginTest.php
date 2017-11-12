@@ -86,6 +86,7 @@ class ExceptionPluginTest extends TestCase
             'HTTP 401' => [StatusCodeInterface::STATUS_UNAUTHORIZED, AuthorizationException::class],
             'HTTP 404' => [StatusCodeInterface::STATUS_NOT_FOUND, RequestException::class],
             'HTTP 500' => [StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR, RequestException::class],
+            'Imaginary HTTP 599' => [599, RequestException::class],
         ];
     }
 }
