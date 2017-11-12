@@ -6,7 +6,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Exception thrown when
+ * Exception thrown when request authorization fails.
  */
 class AuthorizationException extends RequestException
 {
@@ -14,8 +14,8 @@ class AuthorizationException extends RequestException
         RequestInterface $request,
         ResponseInterface $response,
         \Throwable $previous = null
-    ) {
-        $responseData = json_decode($response->getBody()->getContents(), false);
+    ): self {
+        $responseData = json_decode($response->getBody()->getContents());
 
         $message = sprintf(
             'Matej API authorization error for url "%s"%s',
