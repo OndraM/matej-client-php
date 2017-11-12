@@ -24,11 +24,14 @@ class ExceptionPluginTest extends TestCase
         };
     }
 
-    /** @test */
-    public function shouldReturnResponseWhenNoError(): void
+    /**
+     * @test
+     * @dataProvider provideSuccessStatusCodes
+     */
+    public function shouldReturnResponseWhenNoError(int $statusCode): void
     {
         $request = new Request('GET', 'http://foo.com/endpoint');
-        $response = new Response(StatusCodeInterface::STATUS_OK);
+        $response = new Response($statusCode);
 
         $next = function (RequestInterface $receivedRequest) use ($request, $response) {
             $this->assertSame($request, $receivedRequest);
@@ -39,6 +42,17 @@ class ExceptionPluginTest extends TestCase
         $plugin = new ExceptionPlugin();
         $promise = $plugin->handleRequest($request, $next, $this->emptyFunction);
         $this->assertInstanceOf(HttpFulfilledPromise::class, $promise);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function provideSuccessStatusCodes(): array
+    {
+        return [
+            'HTTP 200' => [StatusCodeInterface::STATUS_OK, RequestException::class],
+            'HTTP 201' => [StatusCodeInterface::STATUS_CREATED, AuthorizationException::class],
+        ];
     }
 
     /**
