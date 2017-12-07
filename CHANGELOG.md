@@ -5,7 +5,8 @@
 <!-- There is always Unreleased section on the top. Subsections (Added, Changed, Fixed, Removed) should be added as needed. -->
 
 ## Unreleased
-- Endpoint `$matej->getItemProperties()` that returns all defined item properties
+### Added
+- Endpoint to get all defined item properties in the Matej database (`$matej->request()->getItemProperties()`).
 
 ### Changed
 - Validate max. 1000 commands are added to `campaign()`, `events()`, `setupItemProperties()` and `deleteItemProperties()` requests (in accordance with Matej batch API limit).
