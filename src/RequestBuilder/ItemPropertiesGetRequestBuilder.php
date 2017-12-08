@@ -11,6 +11,6 @@ class ItemPropertiesGetRequestBuilder extends AbstractRequestBuilder
 
     public function build(): Request
     {
-        return new Request(self::ENDPOINT_PATH, RequestMethodInterface::METHOD_GET);
+        return new Request(self::ENDPOINT_PATH, RequestMethodInterface::METHOD_GET, [], $this->requestId);
     }
 }
