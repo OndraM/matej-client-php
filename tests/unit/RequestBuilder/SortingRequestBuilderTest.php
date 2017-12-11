@@ -46,6 +46,7 @@ class SortingRequestBuilderTest extends TestCase
         $this->assertSame($sortingCommand, $requestData[2]);
 
         $this->assertSame('custom-request-id-foo', $request->getRequestId());
+        $this->assertSame(Response\SortingResponse::class, $request->getResponseClass());
     }
 
     /** @test */

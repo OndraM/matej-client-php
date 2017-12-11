@@ -46,6 +46,7 @@ class RecommendationRequestBuilderTest extends TestCase
         $this->assertSame($recommendationsCommand, $requestData[2]);
 
         $this->assertSame('custom-request-id-foo', $request->getRequestId());
+        $this->assertSame(Response\RecommendationsResponse::class, $request->getResponseClass());
     }
 
     /** @test */

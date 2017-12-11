@@ -59,9 +59,9 @@ $response = $matej->request()
     ...
 ```
 
-See below for examples of building request for each endpoint.
-
-To process the response:
+In general, all requests to Matej execute in batch format. This means that a request for single `/recommendation` is in fact
+a single request, which contains up to three `Matej\Model\Command\AbstractCommands`, that are indexed as per Matejs documentation.
+You'd process responses this way:
 
 ```php
 echo 'Number of commands: ' . $response->getNumberOfCommands() . "\n";
@@ -79,6 +79,9 @@ foreach ($response->getCommandResponses() as $commandResponse) {
 }
 ```
 
+Some endpoints have facades, that allow you to work more easily with that particular endpoint.
+See below for detailed examples.
+
 ### Item properties setup (to setup you Matej database)
 
 ```php
@@ -92,9 +95,10 @@ $response = $matej->request()
     ->send();
 
 // Get list of item properties that are defined in matej
-$response = $matej->request()
+$properties = $matej->request()
     ->getItemProperties()
-    ->send();
+    ->send()
+    ->getData();
 
 // Delete item property from database:
 $response = $matej->request()
@@ -143,7 +147,9 @@ $response = $matej->request()
     ->recommendation(UserRecommendation::create('user-id', 5, 'test-scenario', 1.0, 3600))
     ->setInteraction(Interaction::purchase('user-id', 'item-id')) // optional
     ->setUserMerge(UserMerge::mergeInto('user-id', 'source-id')) // optional
-    ->send();
+    ->send()
+    ->getRecommendation()
+    ->getData();
 ```
 
 You can also set more granular options of the recommendation command:
@@ -159,6 +165,21 @@ $response = $matej->request()
     ->send();
 ```
 
+`send()` method returns a Recommendations response, which will allows you to access full response data:
+
+```php
+$response = $matej->request()
+    ->recommendation($recommendation)
+    ->send();
+
+echo $response->getInteraction()->getStatus();    // SKIPPED
+echo $response->getUserMerge()->getStatus();      // SKIPPED
+echo $response->getRecommendation()->getStatus(); // OK
+
+$recommendations = $response->getRecommendation()->getData();
+dump($recommendations);
+```
+
 ### Request item sorting for single user
 
 Request item sorting for single user. You can combine this sorting command with the most recent interaction
@@ -167,12 +188,29 @@ and user merge event in one request, to make them taken into account when execut
 ```php
 $matej = new Matej('accountId', 'apikey');
 
-$response =  $matej->request()
+$sortedData =  $matej->request()
     ->sorting(Sorting::create('user-id', ['item-id-1', 'item-id-2', 'item-id-3']))
     ->setInteraction(Interaction::purchase('user-id', 'item-id')) // optional
     ->setUserMerge(UserMerge::mergeInto('user-id', 'source-id')) // optional
+    ->send()
+    ->getSorting()
+    ->getData();
+
+```
+
+`send()` method returns a Sorting response, which will allows you to access full response data:
+
+```php
+$response = $matej->request()
+    ->sorting($sorting)
     ->send();
 
+echo $response->getInteraction()->getStatus(); // SKIPPED
+echo $response->getUserMerge()->getStatus();   // SKIPPED
+echo $response->getSorting()->getStatus();     // OK
+
+$sortedData = $response->getSorting()->getData();
+dump($sortedData);
 ```
 
 ### Request batch of recommendations/item sortings
