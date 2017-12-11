@@ -8,8 +8,10 @@ use Lmc\Matej\Model\Assertion;
 use Lmc\Matej\Model\Command\ItemPropertySetup;
 use Lmc\Matej\Model\Request;
 
-class ItemPropertiesSetupRequestBuilder extends ItemPropertiesGetRequestBuilder
+class ItemPropertiesSetupRequestBuilder extends AbstractRequestBuilder
 {
+    protected const ENDPOINT_PATH = '/item-properties';
+
     /** @var ItemPropertySetup[] */
     protected $commands = [];
     /** @var bool */
