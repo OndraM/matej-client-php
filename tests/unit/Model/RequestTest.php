@@ -54,7 +54,7 @@ class RequestTest extends UnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf(
-            'Class %s has to be either instance of, or subclass of %s',
+            'Class %s has to be instance or subclass of %s.',
             \stdClass::class,
             Response::class
         ));

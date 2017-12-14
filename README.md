@@ -59,9 +59,9 @@ $response = $matej->request()
     ...
 ```
 
-In general, all requests to Matej execute in batch format. This means that a request for single `/recommendation` is in fact
-a single request, which contains up to three `Matej\Model\Command\AbstractCommands`, that are indexed as per Matejs documentation.
-You'd process responses this way:
+See below for examples of building request for each endpoint.
+
+To process the response:
 
 ```php
 echo 'Number of commands: ' . $response->getNumberOfCommands() . "\n";
@@ -79,8 +79,9 @@ foreach ($response->getCommandResponses() as $commandResponse) {
 }
 ```
 
-Some endpoints have facades, that allow you to work more easily with that particular endpoint.
-See below for detailed examples.
+[Recommendation](#recommendations-for-single-user), [Sorting](#request-item-sorting-for-single-user)
+and [Item Properties](#item-properties-setup-to-setup-you-matej-database) endpoints have syntax sugar,
+which makes processing responses easier. See below for detailed examples.
 
 ### Item properties setup (to setup you Matej database)
 
@@ -177,7 +178,6 @@ echo $response->getUserMerge()->getStatus();      // SKIPPED
 echo $response->getRecommendation()->getStatus(); // OK
 
 $recommendations = $response->getRecommendation()->getData();
-dump($recommendations);
 ```
 
 ### Request item sorting for single user
@@ -210,7 +210,6 @@ echo $response->getUserMerge()->getStatus();   // SKIPPED
 echo $response->getSorting()->getStatus();     // OK
 
 $sortedData = $response->getSorting()->getData();
-dump($sortedData);
 ```
 
 ### Request batch of recommendations/item sortings

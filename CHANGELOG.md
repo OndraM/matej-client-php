@@ -11,7 +11,7 @@
 ### Changed
 - Validate max. 1000 commands are added to `campaign()`, `events()`, `setupItemProperties()` and `deleteItemProperties()` requests (in accordance with Matej batch API limit).
 - `Lmc\Matej\Model\Response` now contains `getCommandResponse(int $index)` to access individual responses
-- `sorting()->send()` request now returns `Matej\Model\Response\SortingResponse`
+- `sorting()->send()` request now returns `Matej\Model\Response\SortingResponse` instance
 - `recommendation()->send()` request now returns `Matej\Model\Response\RecommendationResponse` instance
 - `getItemProperties()->send()` request now returns `Matej\Model\Response\ItemPropertiesListResponse` instance
 

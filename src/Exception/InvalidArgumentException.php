@@ -9,6 +9,6 @@ class InvalidArgumentException extends \InvalidArgumentException implements Mate
 {
     public static function forClassNotExtendingOtherClass($class, $wantedClass)
     {
-        return new self(sprintf('Class %s has to be either instance of, or subclass of %s', $class, $wantedClass));
+        return new self(sprintf('Class %s has to be instance or subclass of %s.', $class, $wantedClass));
     }
 }
