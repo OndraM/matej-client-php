@@ -96,10 +96,11 @@ $response = $matej->request()
     ->send();
 
 // Get list of item properties that are defined in matej
-$properties = $matej->request()
+$response = $matej->request()
     ->getItemProperties()
-    ->send()
-    ->getData();
+    ->send();
+
+$properties = $response->getData();
 
 // Delete item property from database:
 $response = $matej->request()
@@ -148,9 +149,9 @@ $response = $matej->request()
     ->recommendation(UserRecommendation::create('user-id', 5, 'test-scenario', 1.0, 3600))
     ->setInteraction(Interaction::purchase('user-id', 'item-id')) // optional
     ->setUserMerge(UserMerge::mergeInto('user-id', 'source-id')) // optional
-    ->send()
-    ->getRecommendation()
-    ->getData();
+    ->send();
+
+$recommendations = $response->getRecommendation()->getData();
 ```
 
 You can also set more granular options of the recommendation command:
@@ -166,7 +167,7 @@ $response = $matej->request()
     ->send();
 ```
 
-`send()` method returns a Recommendations response, which will allows you to access full response data:
+From `$response`, you can also access rest of the data:
 
 ```php
 $response = $matej->request()
@@ -188,17 +189,16 @@ and user merge event in one request, to make them taken into account when execut
 ```php
 $matej = new Matej('accountId', 'apikey');
 
-$sortedData =  $matej->request()
+$response =  $matej->request()
     ->sorting(Sorting::create('user-id', ['item-id-1', 'item-id-2', 'item-id-3']))
     ->setInteraction(Interaction::purchase('user-id', 'item-id')) // optional
     ->setUserMerge(UserMerge::mergeInto('user-id', 'source-id')) // optional
-    ->send()
-    ->getSorting()
-    ->getData();
+    ->send();
 
+$sortedItems = $response->getSorting()->getData();
 ```
 
-`send()` method returns a Sorting response, which will allows you to access full response data:
+From `$response`, you can also access rest of the data:
 
 ```php
 $response = $matej->request()
