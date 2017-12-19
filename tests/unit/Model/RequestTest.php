@@ -3,7 +3,7 @@
 namespace Lmc\Matej\Model;
 
 use Fig\Http\Message\RequestMethodInterface;
-use Lmc\Matej\Exception\InvalidArgumentException;
+use Lmc\Matej\Exception\LogicException;
 use Lmc\Matej\Model\Response\SortingResponse;
 use Lmc\Matej\UnitTestCase;
 
@@ -52,7 +52,7 @@ class RequestTest extends UnitTestCase
     /** @test */
     public function shouldThrowExceptionWhenSettingInvalidResponseClass(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(LogicException::class);
         $this->expectExceptionMessage(sprintf(
             'Class %s has to be instance or subclass of %s.',
             \stdClass::class,
