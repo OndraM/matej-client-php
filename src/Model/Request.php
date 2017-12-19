@@ -20,13 +20,13 @@ class Request
     /** @var string */
     private $responseClass;
 
-    public function __construct(string $path, string $method, array $data = [], string $requestId = null, string $responseClass = null)
+    public function __construct(string $path, string $method, array $data = [], string $requestId = null, string $responseClass = Response::class)
     {
         $this->path = $path;
         $this->method = $method;
         $this->data = $data;
         $this->requestId = $requestId ?? Uuid::uuid4()->toString();
-        $this->setResponseClass($responseClass ?? Response::class);
+        $this->setResponseClass($responseClass);
     }
 
     public function getPath(): string
